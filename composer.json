@@ -1,0 +1,20 @@
+{
+    "name": "infrangible/m2-mail-attachment",
+    "description": "Infrangible Magento 2 Mail Attachment",
+    "require": {
+        "php": ">=7.1",
+        "magento/framework": "~102.0.3|~103.0.0",
+        "infrangible/m2-foundation": "~1.0"
+    },
+    "type": "magento2-module",
+    "version": "1.0.0",
+    "license": "MIT",
+    "autoload": {
+        "files": [
+            "src/registration.php"
+        ],
+        "psr-4": {
+            "Infrangible\\MailAttachment\\": "src"
+        }
+    }
+}
