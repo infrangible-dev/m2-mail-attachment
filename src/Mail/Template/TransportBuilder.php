@@ -2,9 +2,7 @@
 
 namespace Infrangible\MailAttachment\Mail\Template;
 
-use Zend\Mime\Message;
-use Zend\Mime\Mime;
-use Zend\Mime\Part;
+use Bla\Bla;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Mail\AddressConverter;
 use Magento\Framework\Mail\EmailMessageInterfaceFactory;
@@ -16,7 +14,9 @@ use Magento\Framework\Mail\Template\FactoryInterface;
 use Magento\Framework\Mail\Template\SenderResolverInterface;
 use Magento\Framework\Mail\TransportInterfaceFactory;
 use Magento\Framework\ObjectManagerInterface;
-use Bla\Bla;
+use Zend\Mime\Message;
+use Zend\Mime\Mime;
+use Zend\Mime\Part;
 
 /**
  * @author      Andreas Knollmann
@@ -79,13 +79,13 @@ class TransportBuilder
         ?string $fileName = null)
     {
         /** @var Part $attachmentPart */
-        $attachmentPart = $this->mimePartInterfaceFactory->create();
-
-        $attachmentPart->setContent($content);
-        $attachmentPart->setType($fileType);
-        $attachmentPart->setDisposition($disposition);
-        $attachmentPart->setEncoding($encoding);
-        $attachmentPart->setFileName($fileName);
+        $attachmentPart = $this->mimePartInterfaceFactory->create([
+            'content'     => $content,
+            'type'        => $fileType,
+            'disposition' => $disposition,
+            'encoding'    => $encoding,
+            'fileName'    => $fileName
+        ]);
 
         $this->attachments[] = $attachmentPart;
     }
