@@ -2,8 +2,12 @@
 
 namespace Infrangible\MailAttachment\Mail\Template;
 
+use Laminas\Mime\Message;
+use Laminas\Mime\Mime;
+use Laminas\Mime\Part;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Mail\AddressConverter;
+use Magento\Framework\Mail\EmailMessageInterface;
 use Magento\Framework\Mail\EmailMessageInterfaceFactory;
 use Magento\Framework\Mail\MessageInterface;
 use Magento\Framework\Mail\MessageInterfaceFactory;
@@ -13,9 +17,6 @@ use Magento\Framework\Mail\Template\FactoryInterface;
 use Magento\Framework\Mail\Template\SenderResolverInterface;
 use Magento\Framework\Mail\TransportInterfaceFactory;
 use Magento\Framework\ObjectManagerInterface;
-use Zend\Mime\Message;
-use Zend\Mime\Mime;
-use Zend\Mime\Part;
 
 /**
  * @author      Andreas Knollmann
@@ -60,11 +61,20 @@ class TransportBuilder
         EmailMessageInterfaceFactory $emailMessageInterfaceFactory = null,
         MimeMessageInterfaceFactory $mimeMessageInterfaceFactory = null,
         MimePartInterfaceFactory $mimePartInterfaceFactory = null,
-        AddressConverter $addressConverter = null)
-    {
-        parent::__construct($templateFactory, $message, $senderResolver, $objectManager, $mailTransportFactory,
-            $messageFactory, $emailMessageInterfaceFactory, $mimeMessageInterfaceFactory, $mimePartInterfaceFactory,
-            $addressConverter);
+        AddressConverter $addressConverter = null
+    ) {
+        parent::__construct(
+            $templateFactory,
+            $message,
+            $senderResolver,
+            $objectManager,
+            $mailTransportFactory,
+            $messageFactory,
+            $emailMessageInterfaceFactory,
+            $mimeMessageInterfaceFactory,
+            $mimePartInterfaceFactory,
+            $addressConverter
+        );
 
         $this->emailMessageInterfaceFactory =
             $emailMessageInterfaceFactory ? : $this->objectManager->get(EmailMessageInterfaceFactory::class);
@@ -84,8 +94,8 @@ class TransportBuilder
         string $fileType = Mime::TYPE_OCTETSTREAM,
         string $disposition = Mime::DISPOSITION_ATTACHMENT,
         string $encoding = Mime::ENCODING_BASE64,
-        ?string $fileName = null)
-    {
+        ?string $fileName = null
+    ) {
         $attachmentPart = new Part($content);
 
         $attachmentPart->setType($fileType);
@@ -104,7 +114,7 @@ class TransportBuilder
     {
         parent::prepareMessage();
 
-        if (count($this->attachments) > 0) {
+        if ($this->message instanceof EmailMessageInterface && count($this->attachments) > 0) {
             $body = $this->message->getBody();
 
             if ($body instanceof Message) {
@@ -116,15 +126,15 @@ class TransportBuilder
 
                 $messageData = [];
 
-                $messageData[ 'body' ] = $this->mimeMessageInterfaceFactory->create(['parts' => $parts]);
-                $messageData[ 'to' ] = $this->message->getTo();
-                $messageData[ 'from' ] = $this->message->getFrom();
-                $messageData[ 'cc' ] = $this->message->getCc();
-                $messageData[ 'bcc' ] = $this->message->getBcc();
-                $messageData[ 'replyTo' ] = $this->message->getReplyTo();
-                $messageData[ 'sender' ] = $this->message->getSender();
-                $messageData[ 'subject' ] = $this->message->getSubject();
-                $messageData[ 'encoding' ] = $this->message->getEncoding();
+                $messageData['body'] = $this->mimeMessageInterfaceFactory->create(['parts' => $parts]);
+                $messageData['to'] = $this->message->getTo();
+                $messageData['from'] = $this->message->getFrom();
+                $messageData['cc'] = $this->message->getCc();
+                $messageData['bcc'] = $this->message->getBcc();
+                $messageData['replyTo'] = $this->message->getReplyTo();
+                $messageData['sender'] = $this->message->getSender();
+                $messageData['subject'] = $this->message->getSubject();
+                $messageData['encoding'] = $this->message->getEncoding();
 
                 $this->message = $this->emailMessageInterfaceFactory->create($messageData);
             }
