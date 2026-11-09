@@ -4,10 +4,10 @@
     "require": {
         "php": ">=7.1",
         "magento/framework": "~102.0.5|~103.0.0",
-        "infrangible/m2-foundation": "~1.0|~2.0"
+        "infrangible/m2-foundation": "~1.0.0||~2.2.0"
     },
     "type": "magento2-module",
-    "version": "2.0.0",
+    "version": "2.0.1",
     "license": "MIT",
     "autoload": {
         "files": [
