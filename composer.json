@@ -1,6 +1,6 @@
 {
     "name": "infrangible/m2-mail-attachment",
-    "description": "Infrangible Magento 2 Mail Attachment",
+    "description": "Technical helper that allows Infrangible modules to add file attachments to the emails sent by the store.",
     "require": {
         "php": ">=7.1",
         "magento/framework": "~102.0.5|~103.0.0",
@@ -16,5 +16,11 @@
         "psr-4": {
             "Infrangible\\MailAttachment\\": "src"
         }
-    }
+    },
+    "keywords": [
+        "Magento",
+        "Magento 2",
+        "Adobe Commerce",
+        "Email"
+    ]
 }
