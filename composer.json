@@ -1,14 +1,36 @@
 {
     "name": "infrangible/m2-mail-attachment",
     "description": "Technical helper that allows Infrangible modules to add file attachments to the emails sent by the store.",
-    "require": {
-        "php": ">=7.1",
-        "magento/framework": "~102.0.5|~103.0.0",
-        "infrangible/m2-foundation": "~1.0.0||~2.2.0"
-    },
     "type": "magento2-module",
-    "version": "2.0.1",
+    "version": "3.0.0",
     "license": "MIT",
+    "keywords": [
+        "Magento",
+        "Magento 2",
+        "Adobe Commerce",
+        "Email"
+    ],
+    "homepage": "https://www.infrangible.dev/modules/mail-attachment",
+    "authors": [
+        {
+            "name": "Andreas Knollmann",
+            "email": "a.knollmann@seak.dev",
+            "homepage": "https://www.seak.dev",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=8.1",
+        "infrangible/m2-core": "~5.0.7",
+        "infrangible/m2-foundation": "~3.0.2",
+        "magento/framework": "~103.0.6"
+    },
+    "require-dev": {
+        "infrangible/phpstan-magento": "~1.2.0"
+    },
+    "suggest": {
+        "symfony/mime": "Installed with Magento 2.4.8 and newer, which build the messages with Symfony Mime; older versions use Laminas Mime through Magento's classes"
+    },
     "autoload": {
         "files": [
             "src/registration.php"
@@ -16,11 +38,5 @@
         "psr-4": {
             "Infrangible\\MailAttachment\\": "src"
         }
-    },
-    "keywords": [
-        "Magento",
-        "Magento 2",
-        "Adobe Commerce",
-        "Email"
-    ]
+    }
 }
