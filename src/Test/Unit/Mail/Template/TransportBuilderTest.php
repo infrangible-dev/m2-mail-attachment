@@ -12,7 +12,6 @@ namespace Infrangible\MailAttachment\Test\Unit\Mail\Template;
 
 use Infrangible\MailAttachment\Mail\Template\TransportBuilder;
 use Magento\Framework\Exception\LocalizedException;
-use Magento\Framework\Mail\EmailMessage;
 use Magento\Framework\Mail\EmailMessageInterface;
 use Magento\Framework\Mail\EmailMessageInterfaceFactory;
 use Magento\Framework\Mail\MessageInterface;
@@ -231,13 +230,9 @@ class TransportBuilderTest extends TestCase
      */
     public function testAttachmentsInSymfonyMessage(): void
     {
-        if (! method_exists(EmailMessage::class, 'getSymfonyMessage')) {
-            $this->markTestSkipped('Magento 2.4.7 and older build the message without Symfony Mime.');
-        }
-
         $symfonyMessage = new Message(null, new TextPart('<p>Text</p>', 'utf-8', 'html'));
 
-        $message = $this->createStub(EmailMessage::class);
+        $message = $this->createStub(SymfonyEmailMessageInterface::class);
         $message->method('getSymfonyMessage')->willReturn($symfonyMessage);
 
         $builder = $this->createBuilder($message);
